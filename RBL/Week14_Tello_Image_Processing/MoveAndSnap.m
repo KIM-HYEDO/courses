@@ -1,6 +1,7 @@
 function [img, flag] = MoveAndSnap(mode, my_tello, img_in, displace, offset)
     % img x방향 = tello y방향, img y방향 = tello z방향
-    move_vector = [0, 0.1*((displace > offset)-(displace < -offset))];
+    global my_camera;
+    move_vector = [0, 0.2*((displace > offset)-(displace < -offset))];
     if (norm(move_vector)>0)
         if (mode>0)
             move(my_tello, move_vector, 'WaitUntilDone', true);

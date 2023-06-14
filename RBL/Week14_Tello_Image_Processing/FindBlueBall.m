@@ -1,8 +1,10 @@
-function [center, radius] = FindRedBall(img)
-    % 붉은색 영역 찾기
+function [center, radius] = FindBlueBall(img)
+    % 파란색 영역 찾기
     img_hsv = rgb2hsv(img);
+    
     h = img_hsv(:, :, 1);
-    img_h_cut_hsv = img_hsv.*((h>0.9)+(h<0.1)); % red
+    blue_hsv = (h>0.5)&(h<0.833);
+    img_h_cut_hsv = img_hsv.*(blue_hsv); % red
     img_h_cut_rgb = hsv2rgb(img_h_cut_hsv);
     imshow(img_h_cut_rgb)
     
@@ -17,9 +19,6 @@ function [center, radius] = FindRedBall(img)
     if (length(radii)>1)
         [radius, index] = max(radii);   % 원이 여러개 발견된다면, 반지름이 가장 큰 것 선택
         center = centers(index);
-        %center(1) = centers(index);
-        %center(2) = centers(index+length(radii));
-        
     else
         center = centers;
         radius = radii;
